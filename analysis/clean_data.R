@@ -2,33 +2,58 @@ library(dplyr)
 library(readr)
 library(stringr)
 crashes <- read_csv("./data/2025_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation"))
+crashes <- rbind(crashes, read_csv("./data/2024_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2023_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2022_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2021_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2020_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2019_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2018_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2017_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
+crashes <- rbind(crashes, read_csv("./data/2016_crashes.csv", col_select = c("Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation")))
 names(crashes) <- c("CollisionId", "CrashDate", "WeekDay", "LightingCode", "Prim_CollisionFactor")
+crashes_reformat <- crashes %>%
+  mutate(
+    CrashDate = str_split_i(CrashDate, " ", 1)
+  )
 
 parties <- read_csv("./data/2025_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge"))
+parties <- rbind(parties, read_csv("./data/2024_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2023_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2022_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2021_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2020_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2019_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2018_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2017_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
+parties <- rbind(parties, read_csv("./data/2016_parties.csv", col_select = c("CollisionId", "Other Associate Factor", "StatedAge")))
 names(parties) <- c("CollisionId", "OtherCollisionFactor", "Age")
-#replace "None Apparent"s/NAs before proceeding?
-parties <- parties %>%
+
+#replace "None Apparent"s/NAs before proceeding
+parties_reformat <- parties %>%
   mutate(
     OtherCollisionFactor = str_replace(OtherCollisionFactor, "NONE APPARENT", "0"),
     OtherCollisionFactor = str_replace(OtherCollisionFactor, "VISION OBSCUREMENT - SUNLIGHT", "0"),
-    #OtherCollisionFactor = str_replace(OtherCollisionFactor, "VC SECTION VIOLATED - ", ""),
     Age = ifelse(is.na(Age), 0, Age)
   )
-other_factors <- unique(parties$OtherCollisionFactor)
 
 #will need to merge datasets on collision id first before sorting
-crash_data <- merge(crashes, parties, by = "CollisionId")
+crash_data <- merge(crashes_reformat, parties_reformat, by = "CollisionId")
+
 grouped_crash_data <- crash_data %>%
   group_by(CollisionId) %>%
-  summarise_all(funs(toString(na.omit(.)))) #FIXME: funs is deprecated
+  summarise(across(everything(), list))
 
+get_first<- function(vec){
+  vec[1]
+}
 crash_data_mergedFactors <- grouped_crash_data %>%
   mutate(
-    CrashDate = parse_datetime(str_split_i(CrashDate, " ", 1), format = "%m/%d/%Y"),
+    CrashDate = sapply(CrashDate, FUN = get_first),
+    Age = sapply(Age, FUN = max),
     factor = paste(Prim_CollisionFactor, OtherCollisionFactor, sep =","),
-    WeekDay = str_split_i(WeekDay, ",", 1),
-    Age = str_split(Age, ","),
-    Dark = !(is.na(LightingCode) | (str_split_i(LightingCode, ",", 1) == "A"))
+    WeekDay = sapply(WeekDay, FUN = get_first),
+    Dark = !(is.na(LightingCode) | (lapply(LightingCode, FUN = get_first) == "A"))
 )
 
 #may want to encode any factor involving "HEAD LIGHTS"-- but will need to justify in the paper
@@ -62,22 +87,14 @@ check_codes <- function(codes){
 light_codes_present <- sapply(crash_data_cleanedFactors$cleaned_factors, check_codes)
 sum(light_codes_present)
 
-elderly_check<- function(ages){
-  for(age in ages){
-    if (as.integer(age) >= "70"){
-      return(TRUE)
-    }
-  }
-  return(FALSE)
-}
-
 #get proportion of accidents involving light: 
 almost_final_crash_data <- crash_data_cleanedFactors %>%
   mutate(
   headlightsInvolved = light_codes_present | (vision_obsc_light & Dark) | head_lights_involvment, 
-  elderlyInvolved = lapply(Age, FUN = elderly_check),
-  Month = month(CrashDate),
-  Year = format(CrashDate,"%Y"),
+  elderlyInvolved = Age>= 70,
+  CrashDate_parse = parse_datetime(CrashDate, format = "%m/%d/%Y"),
+  Month = sapply(CrashDate_parse, FUN = month),
+  Year = sapply(CrashDate_parse, FUN = year)
 )
 
 prop_data <- almost_final_crash_data %>%
@@ -89,3 +106,9 @@ prop_data <- almost_final_crash_data %>%
   )
 
 #want to rebuild data frame to only include the columns we want before saving it to clean_data
+
+final_crash_data <- merge(almost_final_crash_data, prop_data, by = "CrashDate")
+
+final_reduced <- subset(final_crash_data, select = c(CrashDate, WeekDay, Month, Year, elderlyInvolved, prop))
+
+write.csv(final_reduced, "./data/clean_crash_data.csv")

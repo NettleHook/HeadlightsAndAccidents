@@ -1,0 +1,53 @@
+---
+title: "HeadlightsAndAccidents"
+author: "Catharina Castillo"
+format: pdf
+editor: visual
+---
+
+## Introduction
+
+Add introduction -- will need to outline changes in LEDs and when they occured to our best ability
+
+## Previous Literature 
+
+Pretty sure there's a better name for this
+
+At the minimum, need to talk about the IHSS study. May be worthwhile to also discuss research done on driver perception of the brightness of headlights. There's one resource open in our windows, but it's from 2004, so we will need to find something more recent
+
+## Data
+Will need to introduce data here, discuss limiting factors:
+
+--Combined crashes and parties datasets so we could get age data and all factors that were noted as part of the accident. Original columns of interest prior to cleaning were: "Collision Id", "Crash Date Time", "Day Of Week", "LightingCode", "Primary Collision Factor Violation" from the crashes dataset and "CollisionId", "Other Associate Factor", "StatedAge" from the parties dataset.
+
+Discuss type of merge used, and what factors will now be left out as a result
+
+Turn this into a table:
+Final columns in our cleaned dataset were:
+prop -> continuous variable, if headlights were listed as one of the factors in this crash. This will be our response variable
+elderlyInvolved -> Boolean, if one of the parties in the crash was 70 or older. Used the DMV's age limit before drivers licenses need to be renewed more frequently (compare to IHSS determination)
+DayofWeek -> Categorical, Day of the Week the accident occured. Included to account for variability in traffic due to the day of the week and commuter patterns.
+Month -> Categorical, included to account for variability due to monthly changes in traffic patterns
+Year -> Discrete Numerical, 
+
+--some inconsistencies in data noting. Sometimes it was specified if glare/light-based vision obscurement was caused by headlights, but not always. In cases where headlights + head beams weren't specifically noted, we checked the lighting code to confirm if it happened in cases where headlights should be on.
+
+--we also included cases when headlights were not on but it was noted that they should've been. This is still relevant to our case of concern, as the brightness of driving lights + the brightness of other's headlights mean some people drive without headlights and aren't aware that they are off. In this way, headlights being off is still related to the brightness of headlights and a potential link to increased accidents due to brighter headlights. Should be noticed we took care to eliminate any cases caused by "dim headlights".
+
+There was some missing data. It was handled as follows:
+missing data from Age -> assumed not elderly
+missing data from LightingCode -> assumed daytime
+missing factors -> considered cases where headlights weren't involved
+
+Primary Limitations of the data: Only available for 2016-2025, which doesn't cover the introduction of LED headlights. Can only extrapolate conclusions based on increasing deployment of brighter headlights in newer cars. All data is human entered, and has slight inconsistencies depending on usage. Primary concern is that "Vision Obscurement" was listed many times without specifying what was causing the obscurement--could have more cases involving headlights that revealed by our search. We assume that the potential inconsistencies[measurement error?] in reporting have at least remained constant over the 9 years we have data for.
+
+## Model
+
+Using multiple regression -> Outline two models, one involves age parameter, other does not. Double check if we cover both now or discuss both in a later section
+
+Need to explore data first before doing this, as we will probably want to do some transform on Y since it'll be teeny otherwise.
+
+## Results
+## Discussion
+##References
+-- 
