@@ -59,10 +59,10 @@ crash_data_mergedFactors <- grouped_crash_data %>%
 #may want to encode any factor involving "HEAD LIGHTS"-- but will need to justify in the paper
 head_lights_involvment <- (grepl("HEAD ?LIGHT", crash_data_mergedFactors$factor, ignore.case = TRUE) | grepl("HIGH ?BEAM", crash_data_mergedFactors$factor, ignore.case = TRUE) | grepl("HDLIGHTS", crash_data_mergedFactors$factor, ignore.case = TRUE)) & !(grepl("DIM HEAD ?LIGHTS", crash_data_mergedFactors$factor, ignore.case = TRUE))
 vision_obsc_light <- grepl("VISION OBSCUREMENT - ", crash_data_mergedFactors$factor, ignore.case = TRUE) & (grepl("LIGHT", crash_data_mergedFactors$factor, ignore.case = TRUE) | grepl("GLARE", crash_data_mergedFactors$factor, ignore.case = TRUE) | grepl("BLINDED", crash_data_mergedFactors$factor, ignore.case = TRUE)) & !(grepl("SUN", crash_data_mergedFactors$factor, ignore.case = TRUE))
-sum(vision_obsc_light)
-unique(crash_data_mergedFactors$factor[head_lights_involvment])
+#sum(vision_obsc_light)
+#unique(crash_data_mergedFactors$factor[head_lights_involvment])
 #we'll need to exclude dim headlights, but include headlights being off--justify in paper
-unique(crash_data_mergedFactors$factor[vision_obsc_light]) #should select specifically for vision obscurement glare, and vision obscurement light. Then only set true if these also happen after sunset (can presume due to headlights)
+#unique(crash_data_mergedFactors$factor[vision_obsc_light]) #should select specifically for vision obscurement glare, and vision obscurement light. Then only set true if these also happen after sunset (can presume due to headlights)
 #will also want to mention that some fields just say vision obscurement without elaboration--these were not included
 
 #now we can clean up factor to just include numbers and commas
@@ -85,7 +85,7 @@ check_codes <- function(codes){
   return(FALSE)
 }
 light_codes_present <- sapply(crash_data_cleanedFactors$cleaned_factors, check_codes)
-sum(light_codes_present)
+#sum(light_codes_present)
 
 #get proportion of accidents involving light: 
 almost_final_crash_data <- crash_data_cleanedFactors %>%
@@ -112,3 +112,22 @@ final_crash_data <- merge(almost_final_crash_data, prop_data, by = "CrashDate")
 final_reduced <- subset(final_crash_data, select = c(CrashDate, WeekDay, Month, Year, elderlyInvolved, prop))
 
 write.csv(final_reduced, "./data/clean_crash_data.csv")
+
+#removing age and reducing row obs to one per date for easier exploratory analysis
+final_reduced_ageless <-  subset(final_reduced, select = c(CrashDate, WeekDay, Month, Year, prop)) %>%
+  distinct()
+write.csv(final_reduced_ageless, "./data/clean_crash_data_reduced.csv")
+
+final_no_zero <- final_reduced[final_reduced$prop > 0,]
+write.csv(final_no_zero, "./data/clean_crash_data_no_zero.csv")
+
+zeroes_16 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2016,]$prop == 0)
+zeroes_17 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2017,]$prop == 0)
+zeroes_18 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2018,]$prop == 0)
+zeroes_19 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2019,]$prop == 0)
+zeroes_20 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2020,]$prop == 0)
+zeroes_21 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2021,]$prop == 0)
+zeroes_22 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2022,]$prop == 0)
+zeroes_23 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2023,]$prop == 0)
+zeroes_24 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2024,]$prop == 0)
+zeroes_25 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2025,]$prop == 0)
