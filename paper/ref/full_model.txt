@@ -35,3 +35,4 @@ Multiple R-squared:  0.02935,	Adjusted R-squared:  0.02935
 F-statistic:  7209 on 18 and 4291397 DF,  p-value: < 2.2e-16
 
 indexing clean_crash_data_no_zero.csv [------------------------------------------] 56.73GB/s, eta:  0sindexing clean_crash_data_no_zero.csv [=========================================] 285.24MB/s, eta:  0s                                                                                                      [1] "integer"
+indexing clean_crash_data_reduced.csv [==========================================] 24.96GB/s, eta:  0s                                                                                                      

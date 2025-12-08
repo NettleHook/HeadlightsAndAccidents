@@ -3,7 +3,9 @@
 This project aims to see if there are more accidents caused by headlights as time goes on and headlights get brighter.
 
 ## Data 
+Crash Data was obtained from https://data.ca.gov/dataset/ccrs on December 2, 2025 for years 2016-2023, and December 6, 2025 for 2024-2025. The data is publicly available, with no restrictions on public use.
 
+Additionally, reference to VC was used in the process. Data on those codes was obtained from https://oag.ca.gov/law/code-tables.
 
 ## External Resources
 

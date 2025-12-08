@@ -1,0 +1,36 @@
+
+Call:
+lm(formula = prop ~ WeekDay + as.factor(Month) + Year, data = crash_data_night)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0006557 -0.0005106 -0.0004206 -0.0002535  0.0088286 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -4.831e-03  5.947e-04  -8.123 4.54e-16 ***
+WeekDayMonday      -1.293e-04  3.110e-06 -41.593  < 2e-16 ***
+WeekDaySaturday    -1.728e-04  2.863e-06 -60.350  < 2e-16 ***
+WeekDaySunday      -1.285e-04  2.910e-06 -44.158  < 2e-16 ***
+WeekDayThursday    -7.066e-05  3.058e-06 -23.108  < 2e-16 ***
+WeekDayTuesday     -3.953e-05  3.135e-06 -12.608  < 2e-16 ***
+WeekDayWednesday   -2.906e-05  3.097e-06  -9.381  < 2e-16 ***
+as.factor(Month)2  -7.871e-05  3.722e-06 -21.146  < 2e-16 ***
+as.factor(Month)3  -8.013e-05  3.787e-06 -21.159  < 2e-16 ***
+as.factor(Month)4  -2.095e-04  4.064e-06 -51.562  < 2e-16 ***
+as.factor(Month)5  -1.121e-05  4.101e-06  -2.732  0.00629 ** 
+as.factor(Month)6  -2.644e-04  4.186e-06 -63.160  < 2e-16 ***
+as.factor(Month)7  -2.064e-04  4.116e-06 -50.159  < 2e-16 ***
+as.factor(Month)8  -6.368e-05  4.016e-06 -15.857  < 2e-16 ***
+as.factor(Month)9   9.076e-06  3.895e-06   2.330  0.01981 *  
+as.factor(Month)10 -4.100e-05  3.678e-06 -11.147  < 2e-16 ***
+as.factor(Month)11 -3.580e-05  3.595e-06  -9.958  < 2e-16 ***
+as.factor(Month)12  4.845e-05  3.533e-06  13.714  < 2e-16 ***
+Year                2.687e-06  2.944e-07   9.127  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.001021 on 1537235 degrees of freedom
+Multiple R-squared:  0.01125,	Adjusted R-squared:  0.01123 
+F-statistic: 971.3 on 18 and 1537235 DF,  p-value: < 2.2e-16
+

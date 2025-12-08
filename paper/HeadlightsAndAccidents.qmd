@@ -1,19 +1,29 @@
 ---
 title: "HeadlightsAndAccidents"
+subtitle: ""
 author: "Catharina Castillo"
+thanks: "Project repository available at: [https://github.com/NettleHook/HeadlightsAndAccidents](https://github.com/NettleHook/HeadlightsAndAccidents)."
+date: today
+date-format: long
+abstract: "Abstract goes here."
 format: pdf
-editor: visual
+bibliography: references.bib
+number-sections: true
 ---
 
 ## Introduction
-
-Add introduction -- will need to outline changes in LEDs and when they occured to our best ability
+  There is much anecdotal evidence supporting the notion that bright headlights are a significant and concerning bother for many drivers.
+  New headlights are perceived as brighter because they are LEDs, and a cooler white. 2007 marks the first year cars were available with these headlights, though it was only higher-end cars. As time has passed, LED headlights are now available in most new cars sold. The National Highway Traffic Safety Administration estimates that about 75% of cars sold in 2023 had LED headlights.
+  Most research now, especially that which draws off findings from the Insurance Institute for Highway Safety(IIHS) states that these new headlights are in fact safer, and that glare doesn't pose an issue.
+  It is still recognized that bright headlights are a distraction, even if they haven't been linked to increases in nighttime car crashes. 
+  One amendment that has been approved for deployment in the USA is Adaptive Driving Beam Headlights, which will turn off various LEDs in the headlight array to reduce glare while still keeping the high visibility. While this was approved in 2022, ADB hasn't been implemented in the US due to compliance challenges car manufacturers face.
+  In the meantime, more and more cars on the road have brighter headlights. Considering the high volume of anecdotal reports that these are distracting and often cause "near misses", as well as the scarce research into the potential connection between increasing perceived brightness of headlights and nighttime car accidents, this research paper seeks to use linear regression to explore if there is a connection between time and accidents caused by headlight glare.
+  Our research will be focused on California.
 
 ## Previous Literature 
 
-Pretty sure there's a better name for this
-
-At the minimum, need to talk about the IHSS study. May be worthwhile to also discuss research done on driver perception of the brightness of headlights. There's one resource open in our windows, but it's from 2004, so we will need to find something more recent
+  The Insurance Institute for Highway Safety(IIHS) did a study they published in October, 2025 where they used data from 11 states across several years. The states included in the study were Connecticut, Florida, Iowa, Illinois, Massachusetts, Michigan, New York, Texas, Washington, and Wisconsin. There was a range of years covered, but generally the data covers from 2013-2016 up to 2023. 
+  The results from the IIHS study was that there was an extremely low number of accidents that listed glare from headlights as a contributing factor, and that there was little change between 2015-2023, which was cited as a period where a lot of changes to headlights occurred. They did find, however, that there was a disproportionate impact of glare on accidents involving 70- and 80- year-old drivers.
 
 ## Data
 Will need to introduce data here, discuss limiting factors:
@@ -25,7 +35,7 @@ Discuss type of merge used, and what factors will now be left out as a result
 Turn this into a table:
 Final columns in our cleaned dataset were:
 prop -> continuous variable, if headlights were listed as one of the factors in this crash. This will be our response variable
-elderlyInvolved -> Boolean, if one of the parties in the crash was 70 or older. Used the DMV's age limit before drivers licenses need to be renewed more frequently (compare to IHSS determination)
+elderlyInvolved -> Boolean, if one of the parties in the crash was 70 or older. Used the DMV's age limit before drivers licenses need to be renewed more frequently.
 DayofWeek -> Categorical, Day of the Week the accident occured. Included to account for variability in traffic due to the day of the week and commuter patterns.
 Month -> Categorical, included to account for variability due to monthly changes in traffic patterns
 Year -> Discrete Numerical, 
@@ -39,15 +49,47 @@ missing data from Age -> assumed not elderly
 missing data from LightingCode -> assumed daytime
 missing factors -> considered cases where headlights weren't involved
 
-Primary Limitations of the data: Only available for 2016-2025, which doesn't cover the introduction of LED headlights. Can only extrapolate conclusions based on increasing deployment of brighter headlights in newer cars. All data is human entered, and has slight inconsistencies depending on usage. Primary concern is that "Vision Obscurement" was listed many times without specifying what was causing the obscurement--could have more cases involving headlights that revealed by our search. We assume that the potential inconsistencies[measurement error?] in reporting have at least remained constant over the 9 years we have data for.
+Primary Limitations of the data: Only available for 2016-2025, which doesn't cover the introduction of LED headlights. Can only extrapolate conclusions based on increasing deployment of brighter headlights in newer cars. All data is human entered, and has slight inconsistencies depending on usage. Primary concern is that "Vision Obscurement" was listed many times without specifying what was causing the obscurement--could have more cases involving headlights that revealed by our search. We assume that the potential inconsistencies[measurement error?] in reporting have at least remained constant over the 9 years we have data for. One glaring limitation is that due to the size of the datasets, we reduced to just accidents that were recorded to have occurred in lighting that would necessitate headlights being on (Dark, Rainy...). Furthermore, due to the high proportion of days without any accidents with headlights listed as a factor in accidents, we excluded days with no recorded accidents from headlights. Table 1 shows the number of days with no reported accidents from headlights by Year.
+
+Plotting the proportion of accidents where headlights were a listed factor against the year we get Figure 1.
+
+The line is very flat, which leaves some concern for interpretability, as we are concerned in the trend of the non-zero points.
+
+Attempting a log transform of the proportion and fitting a LOWESS curve forces the zero points to be dropped, but reveals a positive linear trend, shown in Figure 2.
+
+Upon examination of the data, we found that the number of days where no accidents involving headlights was consistent from year to year, with the exception of 2020-2022, though this is likely due to the Covid-19 pandemic. 
+The number of days with no headlight-involved accidents by year is shown in Table 1.
+
+As the pattern is fairly consistent, we elected to proceed with the data for days where headlight accidents did occur.
+2016 - 299
+2017 - 300
+2018 - 301
+2019 - 298
+2020 - 312
+2021 - 309
+2022 - 308
+2023 - 298
+2024 - 289 #double check last date for 2024 data too
+2025 - 282 #data gathered only until--find date
+**Need to emphasize that days with no crashes increased over full dataset
+
+The plot from this new reduced dataset showing proportion of accidents involving headlights against the year is shown in Figure 3. We note that the plot looks similar to the log transform, so we will proceed without transforming any data.
 
 ## Model
 
+We will be using the model:
+
 Using multiple regression -> Outline two models, one involves age parameter, other does not. Double check if we cover both now or discuss both in a later section
 
-Need to explore data first before doing this, as we will probably want to do some transform on Y since it'll be teeny otherwise.
 
 ## Results
 ## Discussion
+
+Whether or not we end up showing that there is a statistically significant relationship between time and the proportion of accidents caused by headlights doesn't mean that we can attribute headlights as the cause.
+
+A factor that has already been shown to be increasing car accidents is larger truck size. This has also been cited as a cause behind increased headlight glare as well. 
+
+Furthermore, it has been separately noted that there has been an increase in car crashes post-pandemic, though we've attempted to limit this by making our response variable the proportion of all accidents that occur in conditions requiring headlights.
+
 ##References
 -- 
