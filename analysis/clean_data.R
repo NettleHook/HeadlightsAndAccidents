@@ -118,13 +118,26 @@ write.csv(final_reduced_ageless, "./data/clean_crash_data_reduced_night.csv")
 final_no_zero <- final_reduced[final_reduced$prop > 0,]
 write.csv(final_no_zero, "./data/clean_crash_data_no_zero_night.csv")
 
-zeroes_16 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2016,]$prop != 0)
-zeroes_17 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2017,]$prop != 0)
-zeroes_18 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2018,]$prop != 0)
-zeroes_19 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2019,]$prop != 0)
-zeroes_20 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2020,]$prop != 0)
-zeroes_21 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2021,]$prop != 0)
-zeroes_22 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2022,]$prop != 0)
-zeroes_23 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2023,]$prop != 0)
-zeroes_24 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2024,]$prop != 0)
-zeroes_25 = sum(final_reduced_ageless[final_reduced_ageless$Year == 2025,]$prop != 0)
+zeroes_night = data.frame(Year = 2016:2025,
+                          DaysWithHeadlightAccidents = c(sum(final_reduced_ageless[final_reduced_ageless$Year == 2016,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2017,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2018,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2019,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2020,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2021,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2022,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2023,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2024,]$prop != 0),
+                                                         sum(final_reduced_ageless[final_reduced_ageless$Year == 2025,]$prop != 0)),
+                          DaysWithoutHeadlightAccidents = c(sum(final_reduced_ageless[final_reduced_ageless$Year == 2016,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2017,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2018,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2019,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2020,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2021,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2022,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2023,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2024,]$prop == 0),
+                                                            sum(final_reduced_ageless[final_reduced_ageless$Year == 2025,]$prop == 0)))
+zeroes_night <- zeroes_night %>% mutate(total = DaysWithHeadlightAccidents + DaysWithoutHeadlightAccidents) 
+write.csv(zeroes_night, "./data/night_zeroes.csv")

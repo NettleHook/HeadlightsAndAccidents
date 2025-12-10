@@ -1,38 +1,0 @@
-
-Call:
-lm(formula = prop ~ WeekDay + as.factor(Month) + Year, data = crash_data)
-
-Residuals:
-       Min         1Q     Median         3Q        Max 
--3.359e-04 -1.914e-04 -1.397e-04 -7.286e-05  2.990e-03 
-
-Coefficients:
-                     Estimate Std. Error  t value Pr(>|t|)    
-(Intercept)        -3.574e-03  1.302e-04  -27.442  < 2e-16 ***
-WeekDayMonday      -6.019e-05  6.701e-07  -89.812  < 2e-16 ***
-WeekDaySaturday    -3.809e-05  6.689e-07  -56.952  < 2e-16 ***
-WeekDaySunday      -3.379e-06  6.947e-07   -4.864 1.15e-06 ***
-WeekDayThursday    -4.161e-05  6.578e-07  -63.251  < 2e-16 ***
-WeekDayTuesday     -4.597e-05  6.625e-07  -69.401  < 2e-16 ***
-WeekDayWednesday   -3.562e-05  6.610e-07  -53.885  < 2e-16 ***
-as.factor(Month)2  -5.644e-05  9.127e-07  -61.839  < 2e-16 ***
-as.factor(Month)3  -8.046e-05  8.931e-07  -90.090  < 2e-16 ***
-as.factor(Month)4  -1.459e-04  9.107e-07 -160.257  < 2e-16 ***
-as.factor(Month)5  -9.591e-05  8.983e-07 -106.763  < 2e-16 ***
-as.factor(Month)6  -1.710e-04  9.057e-07 -188.749  < 2e-16 ***
-as.factor(Month)7  -1.492e-04  9.027e-07 -165.264  < 2e-16 ***
-as.factor(Month)8  -1.116e-04  8.901e-07 -125.326  < 2e-16 ***
-as.factor(Month)9  -6.429e-05  8.931e-07  -71.982  < 2e-16 ***
-as.factor(Month)10 -4.932e-05  8.824e-07  -55.896  < 2e-16 ***
-as.factor(Month)11 -1.643e-05  9.106e-07  -18.044  < 2e-16 ***
-as.factor(Month)12  5.453e-05  9.121e-07   59.788  < 2e-16 ***
-Year                1.905e-06  6.447e-08   29.548  < 2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 0.0003792 on 4291397 degrees of freedom
-Multiple R-squared:  0.02935,	Adjusted R-squared:  0.02935 
-F-statistic:  7209 on 18 and 4291397 DF,  p-value: < 2.2e-16
-
-indexing clean_crash_data_no_zero.csv [------------------------------------------] 56.73GB/s, eta:  0sindexing clean_crash_data_no_zero.csv [=========================================] 285.24MB/s, eta:  0s                                                                                                      [1] "integer"
-indexing clean_crash_data_reduced.csv [==========================================] 24.96GB/s, eta:  0s                                                                                                      

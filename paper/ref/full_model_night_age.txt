@@ -1,39 +1,39 @@
 
 Call:
-lm(formula = prop ~ WeekDay + as.factor(Month) + elderlyInvolved * 
-    Year, data = crash_data_night)
+lm(formula = log(prop_converse) ~ WeekDay + as.factor(Month) + 
+    elderlyInvolved * Year, data = crash_data_night)
 
 Residuals:
        Min         1Q     Median         3Q        Max 
--0.0006623 -0.0005104 -0.0004204 -0.0002534  0.0088289 
+-0.0086558  0.0002552  0.0004276  0.0005095  0.0006574 
 
 Coefficients:
                            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)              -4.800e-03  6.029e-04  -7.962 1.69e-15 ***
-WeekDayMonday            -1.293e-04  3.110e-06 -41.591  < 2e-16 ***
-WeekDaySaturday          -1.727e-04  2.863e-06 -60.338  < 2e-16 ***
-WeekDaySunday            -1.285e-04  2.910e-06 -44.139  < 2e-16 ***
-WeekDayThursday          -7.067e-05  3.058e-06 -23.114  < 2e-16 ***
-WeekDayTuesday           -3.955e-05  3.135e-06 -12.615  < 2e-16 ***
-WeekDayWednesday         -2.908e-05  3.098e-06  -9.387  < 2e-16 ***
-as.factor(Month)2        -7.869e-05  3.722e-06 -21.142  < 2e-16 ***
-as.factor(Month)3        -8.008e-05  3.787e-06 -21.146  < 2e-16 ***
-as.factor(Month)4        -2.095e-04  4.064e-06 -51.542  < 2e-16 ***
-as.factor(Month)5        -1.114e-05  4.102e-06  -2.715  0.00662 ** 
-as.factor(Month)6        -2.643e-04  4.187e-06 -63.138  < 2e-16 ***
-as.factor(Month)7        -2.064e-04  4.116e-06 -50.142  < 2e-16 ***
-as.factor(Month)8        -6.362e-05  4.016e-06 -15.843  < 2e-16 ***
-as.factor(Month)9         9.109e-06  3.895e-06   2.338  0.01937 *  
-as.factor(Month)10       -4.099e-05  3.678e-06 -11.145  < 2e-16 ***
-as.factor(Month)11       -3.583e-05  3.595e-06  -9.965  < 2e-16 ***
-as.factor(Month)12        4.842e-05  3.533e-06  13.703  < 2e-16 ***
-elderlyInvolvedTRUE       8.868e-05  3.754e-03   0.024  0.98115    
-Year                      2.672e-06  2.984e-07   8.952  < 2e-16 ***
-elderlyInvolvedTRUE:Year -4.039e-08  1.858e-06  -0.022  0.98265    
+(Intercept)               5.483e-03  5.973e-04   9.179  < 2e-16 ***
+WeekDayMonday             1.232e-04  3.106e-06  39.661  < 2e-16 ***
+WeekDaySaturday           1.600e-04  2.860e-06  55.956  < 2e-16 ***
+WeekDaySunday             1.191e-04  2.907e-06  40.984  < 2e-16 ***
+WeekDayThursday           7.005e-05  3.054e-06  22.942  < 2e-16 ***
+WeekDayTuesday            3.900e-05  3.131e-06  12.455  < 2e-16 ***
+WeekDayWednesday          2.346e-05  3.094e-06   7.583 3.39e-14 ***
+as.factor(Month)2         7.905e-05  3.732e-06  21.180  < 2e-16 ***
+as.factor(Month)3         8.051e-05  3.797e-06  21.202  < 2e-16 ***
+as.factor(Month)4         2.103e-04  4.075e-06  51.597  < 2e-16 ***
+as.factor(Month)5         1.186e-05  4.112e-06   2.885  0.00392 ** 
+as.factor(Month)6         2.654e-04  4.197e-06  63.219  < 2e-16 ***
+as.factor(Month)7         2.074e-04  4.126e-06  50.267  < 2e-16 ***
+as.factor(Month)8         6.470e-05  4.025e-06  16.074  < 2e-16 ***
+as.factor(Month)9        -6.165e-06  3.900e-06  -1.581  0.11393    
+as.factor(Month)10        2.987e-05  3.671e-06   8.139 4.00e-16 ***
+as.factor(Month)11        3.591e-05  3.559e-06  10.090  < 2e-16 ***
+as.factor(Month)12       -4.776e-05  3.542e-06 -13.485  < 2e-16 ***
+elderlyInvolvedTRUE      -1.519e-03  3.701e-03  -0.410  0.68146    
+Year                     -3.007e-06  2.957e-07 -10.171  < 2e-16 ***
+elderlyInvolvedTRUE:Year  7.488e-07  1.831e-06   0.409  0.68263    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.001021 on 1537233 degrees of freedom
-Multiple R-squared:  0.01125,	Adjusted R-squared:  0.01123 
-F-statistic: 874.2 on 20 and 1537233 DF,  p-value: < 2.2e-16
+Residual standard error: 0.001024 on 1549776 degrees of freedom
+Multiple R-squared:  0.01074,	Adjusted R-squared:  0.01073 
+F-statistic: 841.3 on 20 and 1549776 DF,  p-value: < 2.2e-16
 
