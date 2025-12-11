@@ -1,6 +1,6 @@
 
 Call:
-lm(formula = log(prop_converse) ~ WeekDay + as.factor(Month) + 
+lm(formula = log(prop_complement) ~ WeekDay + as.factor(Month) + 
     Year, data = crash_data_night)
 
 Residuals:

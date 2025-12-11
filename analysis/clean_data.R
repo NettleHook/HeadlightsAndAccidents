@@ -35,7 +35,7 @@ names(parties) <- c("CollisionId", "OtherCollisionFactor", "Age")
 parties_reformat <- parties %>%
   mutate(
     OtherCollisionFactor = str_replace(OtherCollisionFactor, "NONE APPARENT", "0"),
-    OtherCollisionFactor = str_replace(OtherCollisionFactor, "VISION OBSCUREMENT - SUNLIGHT", "0"),
+    OtherCollisionFactor = str_replace(OtherCollisionFactor, "VISION OBSCUREMENT - SUN ?LIGHT", "0"),
     Age = ifelse(is.na(Age), 0, Age)
   )
 
